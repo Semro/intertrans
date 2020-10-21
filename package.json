@@ -1,0 +1,27 @@
+{
+  "name": "intertrans",
+  "version": "1.0.0",
+  "engines": {
+    "node": "8.12"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.3.3",
+    "body-parser": "^1.19.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Semro/intertrans.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Semro/intertrans/issues"
+  },
+  "homepage": "https://github.com/Semro/intertrans#readme",
+  "description": ""
+}

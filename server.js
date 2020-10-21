@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const mongodbURL = `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_DB_NAME}.tghpe.mongodb.net/${MONGODB_DB_COLLECTION}?retryWrites=true&w=majority`;
+const mongodbURL = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_DB_NAME}.tghpe.mongodb.net/${process.env.MONGODB_DB_COLLECTION}?retryWrites=true&w=majority`;
 const jsonParser = bodyParser.json();
 
 const PORT = process.env.PORT || 9090;

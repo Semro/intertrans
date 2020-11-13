@@ -60,8 +60,6 @@ function sendResults(req, res)
 			departure: 1,
 			duration: 1,
 			arrival: 1,
-			seats: 1,
-			seats_free: 1,
 			price: 1
 		},
 		(err, arr)=>

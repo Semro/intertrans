@@ -6,7 +6,7 @@ var xhr = new XMLHttpRequest();
 function clearView()
 {
 	main.innerHTML = '';
-	let names = ['Транспорт', 'Отправление', 'Время в пути', 'Прибытие', 'Всего мест', 'Свободных мест', 'Цена']
+	let names = ['Транспорт', 'Отправление', 'Время в пути', 'Прибытие', 'Цена']
 	for (let name of names)
 	{
 		let grid_head_element = document.createElement('div');

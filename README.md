@@ -101,4 +101,4 @@ Project Link: [https://github.com/Semro/intertrans](https://github.com/Semro/int
 [issues-shield]: https://img.shields.io/github/issues/semro/intertrans.svg?style=flat-square
 [issues-url]: https://github.com/semro/intertrans/issues
 [license-shield]: https://img.shields.io/github/license/semro/intertrans.svg?style=flat-square
-[license-url]: https://github.com/semro/intertrans/LICENSE.md
+[license-url]: https://github.com/Semro/intertrans/blob/master/LICENSE.md

@@ -88,6 +88,7 @@ function putFlight(obj)
 		}
 		else if (key == 'price')
 		{
+			el.setAttribute('class', 'price');
 			el.innerText = val+' ₽';
 		}
 		else el.innerText = val;

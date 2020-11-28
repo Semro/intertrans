@@ -41,9 +41,9 @@ function getSearchData()
 
 function search()
 {
-	let data = getSearchData();
-//	для тестирования пересадок
-//	let data = {"from":"Москва","to":"Санкт-Петербург","departure":"2018-10-18","type":["plane","train","bus"],"priority":"departure"};
+//	let data = getSearchData();
+//  для тестирования пересадок
+	let data = {"from":"Москва","to":"Санкт-Петербург","departure":"2018-10-18","type":["plane","train","bus"],"priority":"departure"};
 	xhr.open('POST', '/search', true);
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	data = JSON.stringify(data);
@@ -80,9 +80,9 @@ function putFlight(obj, inter)
 			}
 			if (inter)
 			{	
-				el.setAttribute('class', 'row_inter');
+				el.className += ' row_inter';
 			}
-			el.setAttribute('class', 'type');
+			el.className += ' type';
 			el.innerText = typeRUS[val];
 		}
 		else if (key == 'departure' || key == 'arrival')
@@ -168,10 +168,10 @@ function putData(arr)
 
 document.getElementById('search_button').addEventListener('click', search, true);
 
-/*
+
 // для тестирования пересадок
 document.addEventListener('load', search, true);
-*/
+
 xhr.onreadystatechange = ()=>
 {
 	if (xhr.readyState != 4) return;

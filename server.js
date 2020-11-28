@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 9090;
 
 const server = express()
 	.use(express.static(__dirname + '/public'))
-	.post('/search', jsonParser, sendResults)
+	.post('/search', jsonParser, sendInterResults)
 	.listen(PORT, () => console.log(`Listening on ${ PORT } port`));
 
 mongoose.connect(mongodbURL, { useNewUrlParser: true }, (err)=>
@@ -35,7 +35,7 @@ var schema_flight = mongoose.Schema(
 
 var flight = mongoose.model('flight', schema_flight);
 
-/*
+
 // для тестирования пересадок
 function sendInterResults(req, res)
 {
@@ -96,7 +96,7 @@ function sendInterResults(req, res)
 		]
 	);
 }
-*/
+
 
 function sendResults(req, res)
 {

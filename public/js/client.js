@@ -132,6 +132,7 @@ function putInterTitle(arr)
 			interStations += ',';
 		}
 	}
+	interStations += ':';
 	el.innerText = interStations;
 	main.appendChild(el);
 }

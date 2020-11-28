@@ -67,7 +67,7 @@ main
 	background: #ccc;
 	margin: 5px 0 0 0;
 }
-.row, .row_inter, .type, .price
+.row, .row_inter, .row_inter_title, .type, .price
 {
 	padding: 5px;
 	background: #fff;

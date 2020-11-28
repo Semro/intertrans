@@ -64,9 +64,16 @@ function putFlight(obj, inter)
 	}
 	Возможно переделать потом
 	*/
-	for (let key in obj)
+	let keyOrder =
 	{
-		if (key == 'from') continue;
+		type: '',
+		departure: '',
+		duration: '',
+		arrival: '',
+		price: ''
+	};
+	for (let key in keyOrder)
+	{
 		let val = obj[key];
 		let el = document.createElement('div');
 		el.setAttribute('class', 'row');

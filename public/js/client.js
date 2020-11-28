@@ -52,18 +52,6 @@ function search()
 
 function putFlight(obj, inter)
 {
-	/*
-	Порядок ключей важен, объект должен выглядеть так:
-	{
-		type: "plane",
-		from: "Рига",
-		arrival: "2018-10-18T12:20:00.000Z",
-		departure: "2018-10-18T10:55:00.000Z",
-		duration: 5100,
-		price: 4223
-	}
-	Возможно переделать потом
-	*/
 	let keyOrder =
 	{
 		type: '',

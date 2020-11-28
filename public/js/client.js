@@ -41,9 +41,9 @@ function getSearchData()
 
 function search()
 {
-//	let data = getSearchData();
+	let data = getSearchData();
 //  для тестирования пересадок
-	let data = {"from":"Москва","to":"Санкт-Петербург","departure":"2018-10-18","type":["plane","train","bus"],"priority":"departure"};
+//	let data = {"from":"Москва","to":"Санкт-Петербург","departure":"2018-10-18","type":["plane","train","bus"],"priority":"departure"};
 	xhr.open('POST', '/search', true);
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	data = JSON.stringify(data);
@@ -166,7 +166,7 @@ document.getElementById('search_button').addEventListener('click', search, true)
 
 
 // для тестирования пересадок
-document.addEventListener('load', search, true);
+// document.addEventListener('load', search, true);
 
 xhr.onreadystatechange = ()=>
 {

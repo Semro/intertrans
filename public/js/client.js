@@ -1,176 +1,137 @@
-'use strict'
+const main = document.getElementsByTagName('main')[0];
+const xhr = new window.XMLHttpRequest();
 
-var main = document.getElementsByTagName('main')[0];
-var xhr = new XMLHttpRequest();
-
-function clearView()
-{
-	main.innerHTML = '';
-	let names = ['Транспорт', 'Отправление', 'Время в пути', 'Прибытие', 'Цена']
-	for (let name of names)
-	{
-		let grid_head_element = document.createElement('div');
-		grid_head_element.setAttribute('class', 'grid_head');
-		grid_head_element.innerText = name;
-		main.appendChild(grid_head_element);
-	}
+function clearView() {
+  main.innerHTML = '';
+  const names = ['Транспорт', 'Отправление', 'Время в пути', 'Прибытие', 'Цена'];
+  for (const name of names) {
+    const gridHeadElement = document.createElement('div');
+    gridHeadElement.setAttribute('class', 'grid_head');
+    gridHeadElement.innerText = name;
+    main.appendChild(gridHeadElement);
+  }
 }
 
-function getSearchData()
-{
-	let search_data =
-	{
-		from: '',
-		to: '',
-		departure: '',
-		type: [],
-		priority: ''
-	}
-	document.querySelectorAll('[name=location]').forEach((elem)=>
-	{
-		if (elem.id == 'departure') search_data[elem.id] = elem.value;
-		else search_data[elem.id] = elem.value;
-	});
-	document.querySelectorAll('[name=transport]').forEach((elem)=>
-	{
-		if (elem.checked) search_data.type.push(elem.id);
-	});
-	search_data.priority = document.querySelectorAll('[name=priority]')[0].value;
-	return search_data;
+function getSearchData() {
+  const searchData = {
+    from: '',
+    to: '',
+    departure: '',
+    type: [],
+    priority: '',
+  };
+  document.querySelectorAll('[name=location]').forEach((elem) => {
+    if (elem.id === 'departure') searchData[elem.id] = elem.value;
+    else searchData[elem.id] = elem.value;
+  });
+  document.querySelectorAll('[name=transport]').forEach((elem) => {
+    if (elem.checked) searchData.type.push(elem.id);
+  });
+  searchData.priority = document.querySelectorAll('[name=priority]')[0].value;
+  return searchData;
 }
 
-function search()
-{
-	let data = getSearchData();
-//  для тестирования пересадок
-//	let data = {"from":"Москва","to":"Санкт-Петербург","departure":"2018-10-18","type":["plane","train","bus"],"priority":"departure"};
-	xhr.open('POST', '/search', true);
-	xhr.setRequestHeader('Content-Type', 'application/json');
-	data = JSON.stringify(data);
-	xhr.send(data);
+function search() {
+  let data = getSearchData();
+  //  для тестирования пересадок
+  //	let data = {"from":"Москва","to":"Санкт-Петербург","departure":"2018-10-18","type":["plane","train","bus"],"priority":"departure"};
+  xhr.open('POST', '/search', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  data = JSON.stringify(data);
+  xhr.send(data);
 }
 
-function putFlight(obj, inter)
-{
-	let keyOrder =
-	{
-		type: '',
-		departure: '',
-		duration: '',
-		arrival: '',
-		price: ''
-	};
-	for (let key in keyOrder)
-	{
-		let val = obj[key];
-		let el = document.createElement('div');
-		el.setAttribute('class', 'row');
-		if (key == 'type')
-		{
-			let typeRUS =
-			{
-				train: 'Поезд',
-				plane: 'Самолёт',
-				bus: 'Автобус'
-			}
-			if (inter)
-			{	
-				el.className += ' row_inter';
-			}
-			el.className += ' type';
-			el.innerText = typeRUS[val];
-		}
-		else if (key == 'departure' || key == 'arrival')
-		{	
-			let date = new Date(val);
-			let options = 
-			{
-				day: 'numeric',
-				month: 'short',
-				hour: 'numeric',
-				minute: 'numeric'
-			}
-			el.innerText = date.toLocaleString('ru', options);
-		}
-		else if (key == 'duration')
-		{
-			let date = new Date();
-			let offset = date.getTimezoneOffset() * 60000;
-			date = new Date(val * 1000 + offset);
-			date = date.getHours()+' ч '+date.getMinutes()+' мин';
-			el.innerText = date;
-		}
-		else if (key == 'price')
-		{
-			el.setAttribute('class', 'price');
-			el.innerText = val+' ₽';
-		}
-		else el.innerText = val;
-		main.appendChild(el);
-	}
+function putFlight(obj, inter) {
+  const keyOrder = {
+    type: '',
+    departure: '',
+    duration: '',
+    arrival: '',
+    price: '',
+  };
+  for (const key in keyOrder) {
+    const val = obj[key];
+    const el = document.createElement('div');
+    el.setAttribute('class', 'row');
+    if (key === 'type') {
+      const typeRUS = {
+        train: 'Поезд',
+        plane: 'Самолёт',
+        bus: 'Автобус',
+      };
+      if (inter) {
+        el.className += ' row_inter';
+      }
+      el.className += ' type';
+      el.innerText = typeRUS[val];
+    } else if (key === 'departure' || key === 'arrival') {
+      const date = new Date(val);
+      const options = {
+        day: 'numeric',
+        month: 'short',
+        hour: 'numeric',
+        minute: 'numeric',
+      };
+      el.innerText = date.toLocaleString('ru', options);
+    } else if (key === 'duration') {
+      let date = new Date();
+      const offset = date.getTimezoneOffset() * 60000;
+      date = new Date(val * 1000 + offset);
+      date = `${date.getHours()} ч ${date.getMinutes()} мин`;
+      el.innerText = date;
+    } else if (key === 'price') {
+      el.setAttribute('class', 'price');
+      el.innerText = `${val} ₽`;
+    } else el.innerText = val;
+    main.appendChild(el);
+  }
 }
 
-function putInterTitle(arr)
-{
-	let el = document.createElement('div');
-	el.setAttribute('class', 'row_inter_title');
-	let interStations = '';
-	if (arr.length > 2)
-	{
-		interStations = 'Пересадки в';
-	}
-	else 
-	{
-		interStations = 'Пересадка в';
-	}
-	for (let i = 1; i < arr.length; i++)
-	{
-		const elem = arr[i];
-		interStations = `${interStations} ${elem.from}`;
-		if (i < arr.length - 1)
-		{
-			interStations += ',';
-		}
-	}
-	interStations += ':';
-	el.innerText = interStations;
-	main.appendChild(el);
+function putInterTitle(arr) {
+  const el = document.createElement('div');
+  el.setAttribute('class', 'row_inter_title');
+  let interStations = '';
+  if (arr.length > 2) {
+    interStations = 'Пересадки в';
+  } else {
+    interStations = 'Пересадка в';
+  }
+  for (let i = 1; i < arr.length; i++) {
+    const elem = arr[i];
+    interStations = `${interStations} ${elem.from}`;
+    if (i < arr.length - 1) {
+      interStations += ',';
+    }
+  }
+  interStations += ':';
+  el.innerText = interStations;
+  main.appendChild(el);
 }
 
-function putData(arr)
-{
-	clearView();
-	if (arr != '[]')
-	{
-		arr = JSON.parse(arr);
-		for (let val of arr)
-		{
-			if (val.length != undefined)
-			{
-				putInterTitle(val);
-				for (let flight of val)
-				{
-					putFlight(flight, true);
-				}
-			}
-			else putFlight(val);
-		}
-	}
-	else
-	{
-		alert('Ничего не найдено');
-	}
+function putData(arr) {
+  clearView();
+  if (arr.length !== 0) {
+    arr = JSON.parse(arr);
+    for (const val of arr) {
+      if (val.length !== undefined) {
+        putInterTitle(val);
+        for (const flight of val) {
+          putFlight(flight, true);
+        }
+      } else putFlight(val);
+    }
+  } else {
+    window.alert('Ничего не найдено');
+  }
 }
 
 document.getElementById('search_button').addEventListener('click', search, true);
 
-
 // для тестирования пересадок
 // document.addEventListener('load', search, true);
 
-xhr.onreadystatechange = ()=>
-{
-	if (xhr.readyState != 4) return;
-	if (xhr.status != 200) alert('Ошибка подключения: '+xhr.status+': '+xhr.statusText)
-	else putData(xhr.responseText);
-}
+xhr.onreadystatechange = () => {
+  if (xhr.readyState !== 4) return;
+  if (xhr.status !== 200) window.alert(`Ошибка подключения: ${xhr.status}: ${xhr.statusText}`);
+  else putData(xhr.responseText);
+};

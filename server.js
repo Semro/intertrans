@@ -35,6 +35,69 @@ var schema_flight = mongoose.Schema(
 
 var flight = mongoose.model('flight', schema_flight);
 
+/*
+// для тестирования пересадок
+function sendInterResults(req, res)
+{
+	res.json(
+		[
+			[
+				{
+					type: "train",
+					from: "Москва",
+					arrival: "2018-10-18T09:30:00.000Z",
+					departure: "2018-10-18T01:35:00.000Z",
+					duration: 28500,
+					price: 2823
+				},
+				{
+					type: "plane",
+					from: "Санкт-Петебрург",
+					arrival: "2018-10-18T12:20:00.000Z",
+					departure: "2018-10-18T10:55:00.000Z",
+					duration: 5100,
+					price: 4223
+				}
+			],
+			{
+				type: "bus",
+				from: "Москва",
+				arrival: "2018-10-19T04:00:00.000Z",
+				departure: "2018-10-18T18:00:00.000Z",
+				duration: 36000,
+				price: 1224
+			},
+			[
+				{
+					type: "train",
+					from: "Москва",
+					arrival: "2018-10-18T09:30:00.000Z",
+					departure: "2018-10-18T01:35:00.000Z",
+					duration: 28500,
+					price: 2823
+				},
+				{
+					type: "plane",
+					from: "Санкт-Петебрург",
+					arrival: "2018-10-18T12:20:00.000Z",
+					departure: "2018-10-18T10:55:00.000Z",
+					duration: 5100,
+					price: 4223
+				},
+				{
+					type: "plane",
+					from: "Рига",
+					arrival: "2018-10-18T12:20:00.000Z",
+					departure: "2018-10-18T10:55:00.000Z",
+					duration: 5100,
+					price: 4223
+				}
+			]
+		]
+	);
+}
+*/
+
 function sendResults(req, res)
 {
 	req = req.body;
@@ -57,6 +120,7 @@ function sendResults(req, res)
 		{
 			_id: 0,
 			type: 1,
+			from: 1,
 			departure: 1,
 			duration: 1,
 			arrival: 1,

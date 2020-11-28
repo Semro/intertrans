@@ -66,10 +66,19 @@ main
 	background: #ccc;
 	margin: 5px 0 0 0;
 }
-.row, .type, .price
+.row, .row_inter, .type, .price
 {
 	padding: 5px;
 	background: #fff;
+}
+.row_inter_title
+{
+	grid-column-start: 1;
+	grid-column-end: 6;
+}
+.row_inter
+{
+	margin: 0 0 0 30px;
 }
 @media (max-width: 580px)
 {

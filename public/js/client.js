@@ -42,16 +42,31 @@ function getSearchData()
 function search()
 {
 	let data = getSearchData();
+//	для тестирования пересадок
+//	let data = {"from":"Москва","to":"Санкт-Петербург","departure":"2018-10-18","type":["plane","train","bus"],"priority":"departure"};
 	xhr.open('POST', '/search', true);
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	data = JSON.stringify(data);
 	xhr.send(data);
 }
 
-function putFlight(obj)
+function putFlight(obj, inter)
 {
+	/*
+	Порядок ключей важен, объект должен выглядеть так:
+	{
+		type: "plane",
+		from: "Рига",
+		arrival: "2018-10-18T12:20:00.000Z",
+		departure: "2018-10-18T10:55:00.000Z",
+		duration: 5100,
+		price: 4223
+	}
+	Возможно переделать потом
+	*/
 	for (let key in obj)
 	{
+		if (key == 'from') continue;
 		let val = obj[key];
 		let el = document.createElement('div');
 		el.setAttribute('class', 'row');
@@ -62,6 +77,10 @@ function putFlight(obj)
 				train: 'Поезд',
 				plane: 'Самолёт',
 				bus: 'Автобус'
+			}
+			if (inter)
+			{	
+				el.setAttribute('class', 'row_inter');
 			}
 			el.setAttribute('class', 'type');
 			el.innerText = typeRUS[val];
@@ -96,13 +115,50 @@ function putFlight(obj)
 	}
 }
 
+function putInterTitle(arr)
+{
+	let el = document.createElement('div');
+	el.setAttribute('class', 'row_inter_title');
+	let interStations = '';
+	if (arr.length > 2)
+	{
+		interStations = 'Пересадки в';
+	}
+	else 
+	{
+		interStations = 'Пересадка в';
+	}
+	for (let i = 1; i < arr.length; i++)
+	{
+		const elem = arr[i];
+		interStations = `${interStations} ${elem.from}`;
+		if (i < arr.length - 1)
+		{
+			interStations += ',';
+		}
+	}
+	el.innerText = interStations;
+	main.appendChild(el);
+}
+
 function putData(arr)
 {
 	clearView();
 	if (arr != '[]')
 	{
 		arr = JSON.parse(arr);
-		for (let val of arr) putFlight(val);
+		for (let val of arr)
+		{
+			if (val.length != undefined)
+			{
+				putInterTitle(val);
+				for (let flight of val)
+				{
+					putFlight(flight, true);
+				}
+			}
+			else putFlight(val);
+		}
 	}
 	else
 	{
@@ -112,6 +168,10 @@ function putData(arr)
 
 document.getElementById('search_button').addEventListener('click', search, true);
 
+/*
+// для тестирования пересадок
+document.addEventListener('load', search, true);
+*/
 xhr.onreadystatechange = ()=>
 {
 	if (xhr.readyState != 4) return;

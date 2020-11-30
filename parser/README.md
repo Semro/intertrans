@@ -1,2 +1,3 @@
-npm i
+npm install
+<br />
 node parser.js

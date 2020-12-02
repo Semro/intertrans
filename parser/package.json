@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "jsdom": "^16.4.0",
     "jsonfile": "^6.1.0",
+    "mongoose": "^5.11.1",
     "request": "^2.88.2"
   }
 }

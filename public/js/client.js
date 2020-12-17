@@ -2,6 +2,7 @@ const main = document.getElementsByTagName('main')[0];
 const xhr = new window.XMLHttpRequest();
 
 function clearView() {
+  // Очищаем таблицу
   main.innerHTML = '';
   const names = ['Транспорт', 'Отправление', 'Время в пути', 'Прибытие', 'Цена'];
   for (const name of names) {
@@ -13,6 +14,7 @@ function clearView() {
 }
 
 function getSearchData() {
+  // Формирование JSON запроса
   const searchData = {
     from: '',
     to: '',
@@ -32,6 +34,7 @@ function getSearchData() {
 }
 
 function search() {
+  // Заправшиваем данные с сервера
   let data = getSearchData();
   //  для тестирования пересадок
   //	let data = {"from":"Москва","to":"Санкт-Петербург","departure":"2018-10-18","type":["plane","train","bus"],"priority":"departure"};
@@ -42,6 +45,7 @@ function search() {
 }
 
 function putFlight(obj, inter) {
+  // Разбираем структуру рейса и добавляем рейс в таблицу
   const keyOrder = {
     type: '',
     departure: '',
@@ -88,6 +92,7 @@ function putFlight(obj, inter) {
 }
 
 function putInterTitle(arr) {
+  // Добавление заголовка для интермодальной перевозки
   const el = document.createElement('div');
   el.setAttribute('class', 'row_inter_title');
   let interStations = '';
@@ -109,11 +114,14 @@ function putInterTitle(arr) {
 }
 
 function putData(arr) {
+  // Добавление данных в таблицу
   clearView();
   if (arr.length !== 0) {
+    // Если ответ от сервера не пустой
     arr = JSON.parse(arr);
     for (const val of arr) {
       if (val.length !== undefined) {
+        // Если не является массивом, тогда не является интермодальой перевозкой
         putInterTitle(val);
         for (const flight of val) {
           putFlight(flight, true);
@@ -121,16 +129,19 @@ function putData(arr) {
       } else putFlight(val);
     }
   } else {
+    // Если в ответе от сервера ничего нет
     window.alert('Ничего не найдено');
   }
 }
 
+// Ставим обработчик cобытия по нажатию мышью на кнопку "Поиск"
 document.getElementById('search_button').addEventListener('click', search, true);
 
 // для тестирования пересадок
 // document.addEventListener('load', search, true);
 
 xhr.onreadystatechange = () => {
+  // Проверяем состояние запроса и числовой код состояния HTTP ответа
   if (xhr.readyState !== 4) return;
   if (xhr.status !== 200) window.alert(`Ошибка подключения: ${xhr.status}: ${xhr.statusText}`);
   else putData(xhr.responseText);

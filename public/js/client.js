@@ -15,7 +15,7 @@ function clearView() {
 
 function getSearchData() {
   // Формирование JSON запроса
-  const searchData = {
+  let searchData = {
     from: '',
     to: '',
     departure: '',
@@ -30,6 +30,13 @@ function getSearchData() {
     if (elem.checked) searchData.type.push(elem.id);
   });
   searchData.priority = document.querySelectorAll('[name=priority]')[0].value;
+  searchData = {
+    date: searchData.departure,
+    type: "plain",
+    from: searchData.from.toLowerCase(),
+    to: searchData.to.toLowerCase()
+  }
+
   return searchData;
 }
 
@@ -38,7 +45,7 @@ function search() {
   let data = getSearchData();
   //  для тестирования пересадок
   //	let data = {"from":"Москва","to":"Санкт-Петербург","departure":"2018-10-18","type":["plane","train","bus"],"priority":"departure"};
-  xhr.open('POST', '/search', true);
+  xhr.open('POST', '../schedule/lazy/double', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   data = JSON.stringify(data);
   xhr.send(data);
@@ -119,6 +126,7 @@ function putData(arr) {
   if (arr.length !== 0) {
     // Если ответ от сервера не пустой
     arr = JSON.parse(arr);
+    // console.log(arr);
     for (const val of arr) {
       if (val.length !== undefined) {
         // Если не является массивом, тогда не является интермодальой перевозкой

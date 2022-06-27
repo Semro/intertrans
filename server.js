@@ -34,20 +34,20 @@ const schemaFlight = mongoose.Schema({
 const flight = mongoose.model('flight', schemaFlight);
 
 function sendResults(req, res) {
-  req = req.body;
-  req.departure = Date.parse(req.departure);
+  const reqBody = req.body;
+  reqBody.departure = Date.parse(reqBody.departure);
   const sort = {};
-  sort[req.priority] = req.priority === 'seats_free' ? -1 : 1;
-  if (!isNaN(req.departure)) {
+  sort[reqBody.priority] = reqBody.priority === 'seats_free' ? -1 : 1;
+  if (!Number.isNaN(reqBody.departure)) {
     flight
       .find(
         {
-          type: req.type,
-          from: req.from.toLowerCase(),
-          to: req.to.toLowerCase(),
+          type: reqBody.type,
+          from: reqBody.from.toLowerCase(),
+          to: reqBody.to.toLowerCase(),
           departure: {
-            $gte: new Date(req.departure),
-            $lt: new Date(req.departure + 86400000),
+            $gte: new Date(reqBody.departure),
+            $lt: new Date(reqBody.departure + 86400000),
           },
         },
         {

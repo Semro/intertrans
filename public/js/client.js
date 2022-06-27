@@ -113,12 +113,13 @@ function putInterTitle(arr) {
   main.appendChild(el);
 }
 
-function putData(arr) {
+function putData(res) {
   // Добавление данных в таблицу
   clearView();
-  if (arr.length !== 0) {
+  if (res.length !== 0) {
     // Если ответ от сервера не пустой
-    arr = JSON.parse(arr);
+    const arr = JSON.parse(res);
+    // console.log(arr);
     for (const val of arr) {
       if (val.length !== undefined) {
         // Если не является массивом, тогда не является интермодальой перевозкой

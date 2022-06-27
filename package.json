@@ -2,7 +2,7 @@
   "name": "intertrans",
   "version": "1.0.0",
   "engines": {
-    "node": "8.12"
+    "node": "18.x"
   },
   "main": "server.js",
   "scripts": {

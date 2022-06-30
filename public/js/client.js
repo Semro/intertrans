@@ -138,6 +138,10 @@ function putData(res) {
 // Ставим обработчик cобытия по нажатию мышью на кнопку "Поиск"
 document.getElementById('search_button').addEventListener('click', search, true);
 
+window.onload = () => {
+  search();
+};
+
 // для тестирования пересадок
 // document.addEventListener('load', search, true);
 
